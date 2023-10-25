@@ -1,13 +1,18 @@
 {
   inputs = { 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    flake-utils.url = "github:numtide/flake-utils";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    deploy.url = "github:serokell/deploy-rs";
 
   };
 
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware }@inputs: 
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, flake-utils,
+              sops-nix, deploy }@inputs: 
 
     let
       system = "x86_64-linux";
@@ -43,5 +48,9 @@
           modules = jarrettModules ++ vmHostModules ++ [./systems/garage.nix];
         };
       };
+
+      deploy = import ./deploy.nix (inputs // {
+        inherit inputs;
+      });
     };
 }
