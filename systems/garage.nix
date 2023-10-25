@@ -1,0 +1,5 @@
+{
+  services.garage = {
+    enable = true;
+  };
+}
