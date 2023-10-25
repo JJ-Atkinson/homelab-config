@@ -6,7 +6,6 @@ let
   mkNode = server: ip: fast: {
     hostname = "${ip}";
     fastConnection = fast;
-    sshUser = "jarrett";
     profiles.system.path =
       deploy.lib.x86_64-linux.activate.nixos
         self.nixosConfigurations."${server}";
