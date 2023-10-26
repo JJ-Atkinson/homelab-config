@@ -15,7 +15,7 @@ in
     ${builtins.readFile cleartextConfig}
 
     # Begin Secrets
-    rpc_secret = "${config.sops.placeholder.rpc_secret}
+    rpc_secret = "${config.sops.placeholder.rpc_secret}"
   '';
 
 
