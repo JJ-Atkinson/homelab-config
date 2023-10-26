@@ -7,6 +7,7 @@ let
 in
 {
   sops.defaultSopsFile = ../secrets/garage.yaml;
+  sops.age.keyFile = "/var/lib/sops-nix/keys.txt"
   sops.secrets = {
      rpc_secret = {};
   };
