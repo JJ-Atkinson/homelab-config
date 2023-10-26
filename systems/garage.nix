@@ -37,9 +37,9 @@ in
       ExecStart = lib.mkForce "${pkg}/bin/garage server";
 
       StateDirectory = "garage";
-      DynamicUser = true;
-      ProtectHome = true;
-      NoNewPrivileges = true;
+      # DynamicUser = true;
+      # ProtectHome = true;
+      # NoNewPrivileges = true;
     };
     environment = {
       RUST_LOG = "garage=${logLevel}";
