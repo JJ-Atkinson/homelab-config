@@ -10,10 +10,14 @@ in
   sops.age.keyFile = "/var/lib/sops-nix/keys.txt";
   sops.secrets = {
      rpc_secret = {};
+     admin_token = {};
+     metrics_token = {};
   };
   sops.templates.garage_toml.content = ''
     # Begin Secrets
     rpc_secret = "${config.sops.placeholder.rpc_secret}"
+    admin.admin_token = "${config.sops.placeholder.admin_token}"
+    admin.metrics_token = "${config.sops.placeholder.metrics_token}"
     # End Secrets
 
     ${builtins.readFile cleartextConfig}
