@@ -11,24 +11,18 @@ in
   sops.secrets = {
      rpc_secret = {};
   };
-  sops.templates."garage-with-secrets.toml".content = ''
+  sops.templates.garage_toml.content = ''
     ${builtins.readFile cleartextConfig}
+
+    # Begin Secrets
     rpc_secret = "${config.sops.placeholder.rpc_secret}
   '';
 
 
   networking.hostName = "garage-ct";
-  services.garage = {
-    enable = true;
-    settings = {
-      replication_mode = "none";
-      metadata_dir = "/var/lib/garage/metadata";
-      data_dir = "/var/lib/garage/data";
-    };
-  };
 
   environment.etc."garage.toml" = {
-    source = lib.mkForce config.sops.templates."garage-with-secrets.toml".path;
+    source = lib.mkForce config.sops.templates.garage_toml.path;
   };
 
   environment.systemPackages = [ pkg ]; 
@@ -38,7 +32,7 @@ in
     after = [ "network.target" "network-online.target" ];
     wants = [ "network.target" "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-    restartTriggers = [ config.sops.templates."garage-with-secrets.toml".path ];
+    restartTriggers = [ config.sops.templates.garage_toml.path ];
     serviceConfig = {
       ExecStart = lib.mkForce "${pkg}/bin/garage server";
 
