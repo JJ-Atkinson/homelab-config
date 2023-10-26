@@ -1,0 +1,38 @@
+metadata_dir = "/var/lib/garage/meta"
+data_dir = "/var/lib/garage/data"
+metadata_fsync = true
+data_fsync = false
+
+db_engine = "lmdb"
+
+block_size = 1048576
+
+sled_cache_capacity = "128MiB"
+sled_flush_every_ms = 2000
+lmdb_map_size = "1T"
+
+replication_mode = "1"
+
+compression_level = 1
+
+#rpc_secret = "4425f5c26c5e11581d3223904324dcb5b5d5dfb14e5e7f35e38c595424f5f1e6"
+rpc_bind_addr = "[::]:3901"
+rpc_public_addr = "[fc00:1::1]:3901"
+
+
+[s3_api]
+api_bind_addr = "[::]:3900"
+s3_region = "garage"
+root_domain = ".s3.garage"
+
+[s3_web]
+bind_addr = "[::]:3902"
+root_domain = ".web.garage"
+
+[admin]
+api_bind_addr = "0.0.0.0:3903"
+metrics_token = "cacce0b2de4bc2d9f5b5fdff551e01ac1496055aed248202d415398987e35f81"
+admin_token = "ae8cb40ea7368bbdbb6430af11cca7da833d3458a5f52086f4e805a570fb5c2a"
+trace_sink = "http://localhost:4317"
+
+# DO NOT REMOVE THIS LINE. This is a line break to allow appending the secrets.toml

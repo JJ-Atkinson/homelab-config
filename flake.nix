@@ -7,7 +7,6 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     deploy.url = "github:serokell/deploy-rs";
-
   };
 
 
@@ -30,6 +29,10 @@
         inherit nixos-hardware;
       };
 
+      baseModules = [
+        sops-nix.nixosModules.sops
+      ];
+
       vmHostModules = [
         "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
         ./hardware/proxmox-lxc.nix
@@ -45,7 +48,7 @@
       nixosConfigurations = {
         garage-ct = nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
-          modules = jarrettModules ++ vmHostModules ++ [./systems/garage.nix];
+          modules = baseModules ++ jarrettModules ++ vmHostModules ++ [./systems/garage.nix];
         };
       };
 
