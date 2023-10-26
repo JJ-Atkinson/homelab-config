@@ -12,10 +12,11 @@ in
      rpc_secret = {};
   };
   sops.templates.garage_toml.content = ''
-    ${builtins.readFile cleartextConfig}
-
     # Begin Secrets
     rpc_secret = "${config.sops.placeholder.rpc_secret}"
+    # End Secrets
+
+    ${builtins.readFile cleartextConfig}
   '';
 
 
