@@ -29,8 +29,8 @@ root_domain = ".s3.garage"
 bind_addr = "[::]:3902"
 root_domain = ".web.garage"
 
-[admin]
-api_bind_addr = "0.0.0.0:3903"
+#[admin]
+admin.api_bind_addr = "0.0.0.0:3903"
 #metrics_token = "cacce0b2de4bc2d9f5b5fdff551e01ac1496055aed248202d415398987e35f81"
 #admin_token = "ae8cb40ea7368bbdbb6430af11cca7da833d3458a5f52086f4e805a570fb5c2a"
-trace_sink = "http://localhost:4317"
+admin.trace_sink = "http://localhost:4317"
