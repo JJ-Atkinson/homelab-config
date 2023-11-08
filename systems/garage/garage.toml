@@ -1,6 +1,6 @@
 metadata_dir = "/var/lib/garage/meta"
 data_dir = "/var/lib/garage/data"
-metadata_fsync = true
+metadata_fsync = false
 data_fsync = false
 
 db_engine = "lmdb"
@@ -11,23 +11,23 @@ sled_cache_capacity = "128MiB"
 sled_flush_every_ms = 2000
 lmdb_map_size = "1T"
 
-replication_mode = "0"
+replication_mode = "none"
 
 compression_level = 1
 
 #rpc_secret = "4425f5c26c5e11581d3223904324dcb5b5d5dfb14e5e7f35e38c595424f5f1e6"
 rpc_bind_addr = "[::]:3901"
-rpc_public_addr = "[fc00:1::1]:3901"
+rpc_public_addr = "127.0.0.1:3901"
 
 
 [s3_api]
 api_bind_addr = "[::]:3900"
-s3_region = "garage"
-root_domain = ".s3.garage"
+s3_region = "us-west-1"
+root_domain = ".s3.garage-ct.lan"
 
 [s3_web]
 bind_addr = "[::]:3902"
-root_domain = ".web.garage"
+root_domain = ".s3.pathul-dapneb.com"
 
 #[admin]
 admin.api_bind_addr = "0.0.0.0:3903"

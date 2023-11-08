@@ -4,9 +4,10 @@ let
   logLevel = "info";
   cleartextConfig = ./garage/garage.toml;
   pkg = pkgs-unstable.garage_0_9_0;
+  defaultSopsFile = ../secrets/garage.yaml;
 in
 {
-  sops.defaultSopsFile = ../secrets/garage.yaml;
+  sops.defaultSopsFile = defaultSopsFile;
   sops.age.keyFile = "/var/lib/sops-nix/keys.txt";
   sops.secrets = {
      rpc_secret = {};
@@ -23,6 +24,14 @@ in
     ${builtins.readFile cleartextConfig}
   '';
 
+  networking.firewall.allowedTCPPorts = [ # Must be updated when the toml file is updated
+    3900
+    3901
+    3902
+    3903
+    4317
+  ];
+
 
   networking.hostName = "garage-ct";
 
@@ -37,7 +46,8 @@ in
     after = [ "network.target" "network-online.target" ];
     wants = [ "network.target" "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-    restartTriggers = [ config.sops.templates.garage_toml.path ];
+    restartTriggers = [ (builtins.hashFile "sha256" defaultSopsFile)
+                        (builtins.hashFile "sha256" cleartextConfig) ];
     serviceConfig = {
       ExecStart = lib.mkForce "${pkg}/bin/garage server";
 
