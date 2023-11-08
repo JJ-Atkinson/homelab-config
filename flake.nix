@@ -50,6 +50,11 @@
           inherit system specialArgs;
           modules = baseModules ++ jarrettModules ++ vmHostModules ++ [./systems/garage.nix];
         };
+
+        rss-server = nixpkgs.lib.nixosSystem {
+          inherit system specialArgs;
+          modules = baseModules ++ jarrettModules ++ vmHostModules ++ [./systems/rss-server.nix];
+        };
       };
 
       deploy = import ./deploy.nix (inputs // {
