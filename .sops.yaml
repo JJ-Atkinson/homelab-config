@@ -5,6 +5,7 @@
 keys:
   - &admin_jarrett 129C4A67BB9B6E293E29D2F7E7A699A45DC0DD8A
   - &garage age1sunhw6ggvycqul4esu7a0knvwtaa94v0j3c7ldefv2c88d8m3pws0myl99
+  - &rss_server age1lnmt7gle75q8ja4kcx9y2pfu8p2ejq4x3lwwsuyx6u2h3dshlaxsnqmdv8
 creation_rules:
   - path_regex: secrets/garage.yaml$
     pgp: *admin_jarrett
@@ -12,3 +13,7 @@ creation_rules:
 
   - path_regex: secrets/nixos-binary-cache.yaml$
     pgp: *admin_jarrett
+  
+  - path_regex: secrets/rss-server.yaml$
+    pgp: *admin_jarrett
+    age: *rss_server
