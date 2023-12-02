@@ -7,11 +7,12 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     deploy.url = "github:serokell/deploy-rs";
+    rss-server.url = "github:JJ-Atkinson/personal-rss-reserver";
   };
 
 
   outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, flake-utils,
-              sops-nix, deploy }@inputs: 
+              sops-nix, deploy, rss-server }@inputs: 
 
     let
       system = "x86_64-linux";
@@ -26,7 +27,7 @@
           config.allowUnfree = true;
         };
         
-        inherit nixos-hardware;
+        inherit nixos-hardware inputs;
       };
 
       baseModules = [
@@ -53,7 +54,8 @@
 
         rss-server = nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
-          modules = baseModules ++ jarrettModules ++ vmHostModules ++ [./systems/rss-server.nix];
+          modules = baseModules ++ jarrettModules ++ vmHostModules ++
+           [./systems/rss-server.nix];
         };
       };
 

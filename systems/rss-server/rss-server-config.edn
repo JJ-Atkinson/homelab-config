@@ -1,0 +1,48 @@
+
+;; These are purely overrides for the default config. See the repo for any other important config
+;; options, such as secrets being refed into the appropriate components and components being 
+;; properly being refed to eachother.
+{:system {:personal-rss-feed.feed.db/conn
+          {:uri "/var/lib/datalevin/personal-rss-server"}
+
+          :personal-rss-feed.queue/queue
+          {:dev.freeformsoftware.simple-queue.core/persistence-dir    "/var/lib/simple-queue/personal-rss-server"
+           :dev.freeformsoftware.simple-queue.core/default-timeout-ms 100000 ;; 100s
+           :dev.freeformsoftware.simple-queue.core/watchdog-ms        1000
+           }
+
+          :personal-rss-feed.feed.s3/s3
+          {:hostname          "garage-ct.lan"
+           :port              3900
+           :region            "us-west-1"
+           :access-key-id     "GKf824d02222f93cb03b3144a1"
+           :secret-access-key #n/ref :s3/secret-access-key
+           :bucket-name       "lotus-eaters"}
+
+           :personal-rss-feed.ingest.lotus-eaters/lotus-eaters-ingest
+           {:start-auto-poll?          true
+            :start-daily-feed-parse?   true 
+            :apply-playwright-cli-fix? true
+            :downloads-per-day         12}
+
+           :personal-rss-feed.feed.feed-host/server
+           {:jetty                    {:port 3000}}
+
+           :personal-rss-feed.admin.auth/auth
+           {:personal-rss-feed.admin.auth/hash-options {:alg :bcrypt+sha512}
+            :personal-rss-feed.admin.auth/jwt-options  {:exp-period-s 86400 ;; 1 day
+                                                        :buddy        {:skip-validation false
+                                                                       :alg             :hs512}}}
+
+           :personal-rss-feed.admin.server/server
+           {:jetty                    {:port 3001}}}
+
+;; Part of the secrets file
+; :lotus-eaters/username    "username"
+; :lotus-eaters/password    "password"
+; :s3/secret-access-key     "s3-secret-access-key"
+; :s3/public-s3-prefix      "https://s3.amazaonaws....com/prefix/" ; to be appended with "uuid.extension"
+; :feed/secret-path-segment "a"
+; :feed/public-feed-address "http://localhost:3000/"
+; :auth/jwt-secret          "secret"
+ }
