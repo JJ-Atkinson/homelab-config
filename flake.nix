@@ -67,8 +67,8 @@
 
         immich = nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
-          modules = baseModules ++ jarrettModules ++ vmHostModules ++
-          #  [./modules/tailscale.nix] ++
+          modules = baseModules ++ jarrettModules ++ vmHostModules 
+          # ++ [./modules/tailscale.nix] ++
           #  [./systems/immich.nix]
            ;
         };
