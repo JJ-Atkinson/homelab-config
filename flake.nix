@@ -17,6 +17,11 @@
     let
       system = "x86_64-linux";
 
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
       specialArgs = {
         nixpkgs = import nixpkgs {
           inherit system;
@@ -33,6 +38,8 @@
       baseModules = [
         sops-nix.nixosModules.sops
       ];
+
+
 
       vmHostModules = [
         "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
@@ -57,10 +64,28 @@
           modules = baseModules ++ jarrettModules ++ vmHostModules ++
            [./systems/rss-server.nix];
         };
+
+        immich = nixpkgs.lib.nixosSystem {
+          inherit system specialArgs;
+          modules = baseModules ++ jarrettModules ++ vmHostModules ++
+          #  [./modules/tailscale.nix] ++
+          #  [./systems/immich.nix]
+           ;
+        };
       };
 
       deploy = import ./deploy.nix (inputs // {
         inherit inputs;
       });
+
+      devShell."${system}" = pkgs.mkShell {
+        buildInputs = [
+          pkgs.nixos-generators
+          pkgs.sops
+          pkgs.ssh-to-pgp
+          pkgs.age
+          pkgs.deploy-rs
+        ];
+      };
     };
 }

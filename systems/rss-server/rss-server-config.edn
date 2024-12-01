@@ -20,8 +20,8 @@
            :bucket-name       "lotus-eaters"}
 
            :personal-rss-feed.ingest.lotus-eaters/lotus-eaters-ingest
-           {:start-auto-poll?          true
-            :start-daily-feed-parse?   true 
+           {:start-auto-poll?          false
+            :start-daily-feed-parse?   false 
             :apply-playwright-cli-fix? true
             :downloads-per-day         12}
 

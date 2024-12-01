@@ -1,4 +1,7 @@
 secret-keys/*
+.clj-kondo/*
+.direnv/*
+.portal/*
 result
 .lsp
 .tmp
