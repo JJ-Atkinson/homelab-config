@@ -21,7 +21,7 @@ nixos-rebuild boot
 
 Reboot the vm. To speed the process, you can set the config for the machine to just `blank` reducing the number of things pulled from the nix cache. 
 
-Test deploy with `deploy .#machine-hostname` from this directory.
+Edit `deploy.nix` to contain the new machine name & ip. Test deploy with `deploy .#machine-hostname` from this directory.
 
 ### To generate secret keys on the remote machine:
 

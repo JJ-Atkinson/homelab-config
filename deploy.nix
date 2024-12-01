@@ -17,5 +17,6 @@ in
   nodes = {
     garage-ct = mkNode "garage-ct" "192.168.50.35" true;
     rss-server = mkNode "rss-server" "192.168.50.193" true;
+    immich = mkNode "immich" "192.168.50.111" true;
   };
 }

@@ -54,10 +54,10 @@
 
     in {
       nixosConfigurations = {
-        garage-ct = nixpkgs.lib.nixosSystem {
-          inherit system specialArgs;
-          modules = baseModules ++ jarrettModules ++ vmHostModules ++ [./systems/garage.nix];
-        };
+        # garage-ct = nixpkgs.lib.nixosSystem {
+        #   inherit system specialArgs;
+        #   modules = baseModules ++ jarrettModules ++ vmHostModules ++ [./systems/garage.nix];
+        # };
 
         rss-server = nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
@@ -68,8 +68,8 @@
         immich = nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
           modules = baseModules ++ jarrettModules ++ vmHostModules 
-          # ++ [./modules/tailscale.nix] ++
-          #  [./systems/immich.nix]
+          ++ [./modules/tailscale.nix]
+          # ++ [./systems/immich.nix]
            ;
         };
       };
