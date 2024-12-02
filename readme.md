@@ -37,3 +37,6 @@ cp ~/.config/sops/age/keys.txt /var/lib/sops-nix/keys.txt
 
 # Copy the public key to .sops.yaml and re-gen the appropriate secret-containing files
 ```
+
+
+https://nixos.wiki/wiki/Flakes#Using_nix_flakes_with_NixOS

@@ -1,6 +1,6 @@
 {
   inputs = { 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
@@ -68,9 +68,7 @@
         immich = nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
           modules = baseModules ++ jarrettModules ++ vmHostModules 
-          ++ [./modules/tailscale.nix]
-          # ++ [./systems/immich.nix]
-           ;
+           ++ [./modules/tailscale.nix ./systems/immich.nix];
         };
       };
 
