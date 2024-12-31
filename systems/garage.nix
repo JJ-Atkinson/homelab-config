@@ -3,7 +3,7 @@
 let 
   logLevel = "info";
   cleartextConfig = ./garage/garage.toml;
-  pkg = pkgs-unstable.garage_0_9_0;
+  pkg = pkgs.garage_0_9;
   defaultSopsFile = ../secrets/garage.yaml;
 in
 {

@@ -21,6 +21,19 @@ nixos-rebuild boot
 
 Reboot the vm. To speed the process, you can set the config for the machine to just `blank` reducing the number of things pulled from the nix cache. 
 
+### Tailscale
+
+
+https://tailscale.com/kb/1130/lxc-unprivileged
+
+
+You need to add the following to the container conf in `/etc/pve/lxc/ct-id.conf` and reboot
+
+```
+lxc.cgroup2.devices.allow: c 10:200 rwm
+lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file
+```
+
 Edit `deploy.nix` to contain the new machine name & ip. Test deploy with `deploy .#machine-hostname` from this directory.
 
 ### To generate secret keys on the remote machine:
