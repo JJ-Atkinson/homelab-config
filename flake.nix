@@ -41,6 +41,7 @@
         ./hardware/proxmox-lxc.nix
         ./hardware/common.nix
         ./modules/tailscale.nix
+        ./modules/etc.nix
       ];
 
       jarrettModules = [ ./users/common.nix ./users/jarrett.nix ];
