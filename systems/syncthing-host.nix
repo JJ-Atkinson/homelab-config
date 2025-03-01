@@ -2,6 +2,7 @@
 
 {
 
+  networking.hostName = "syncthing-host";
   environment.systemPackages = [ ];
 
   services.syncthing = {

@@ -17,6 +17,10 @@ nix-shell -p git
 
 git clone https://github.com/JJ-Atkinson/homelab-config.git .
 nixos-rebuild boot
+# As a fallback, if hostname is incorrect, you can use
+
+nixos-rebuild switch --flake .#nixosvmr
+
 ```
 
 Reboot the vm. To speed the process, you can set the config for the machine to just `blank` reducing the number of things pulled from the nix cache. 
