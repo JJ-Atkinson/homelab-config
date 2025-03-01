@@ -62,7 +62,14 @@
 
         immich = nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
-          modules = baseModules ++ jarrettModules ++ vmHostModules ++ [ ./systems/immich.nix ];
+          modules = baseModules ++ jarrettModules ++ vmHostModules
+            ++ [ ./systems/immich.nix ];
+        };
+
+        syncthing-host = nixpkgs.lib.nixosSystem {
+          inherit system specialArgs;
+          modules = baseModules ++ jarrettModules ++ vmHostModules
+            ++ [ ./systems/syncthing-host.nix ];
         };
       };
 

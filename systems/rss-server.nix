@@ -29,8 +29,7 @@ in
     '';
 
   networking.firewall.allowedTCPPorts = [
-    3000   # jetty-static-feed
-    3001   # jetty-electric
+    3001   # http-kit
     8001   # nrepl
   ];
 
