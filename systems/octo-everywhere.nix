@@ -2,7 +2,7 @@
 
 {
 
-  networking.hostName = "octo-eveywhere";
+  networking.hostName = "octo-everywhere";
 
   environment.systemPackages = [ ];
 

@@ -18,7 +18,7 @@ in
     garage-ct = mkNode "garage-ct" "192.168.50.35" true;
     rss-server = mkNode "rss-server" "192.168.50.193" true;
     immich = mkNode "immich" "192.168.50.37" true;
-    octo-eveywhere = mkNode "octo-everywhere" "192.168.50.196" true;
+    octo-everywhere = mkNode "octo-everywhere" "192.168.50.196" true;
     syncthing-host = mkNode "syncthing-host" "syncthing-host" true;
   };
 }
