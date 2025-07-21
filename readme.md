@@ -6,6 +6,15 @@ At the router, configure DCHP to give the machine a static IP.
 
 > In proxmox, set tty to /dev/console so you can see boot logs. See `Options` on the VM config.
 
+(to log in from the lxc console in the pve admin interface, use the following commands on the pve host)
+
+```bash
+$ pct enter
+$ source /etc/set-environment
+$ passwd # set your root pw
+```
+
+Inside the LXC run:
 
 ```
 # SSH root@ip. 
@@ -19,8 +28,10 @@ git clone https://github.com/JJ-Atkinson/homelab-config.git .
 nixos-rebuild boot
 # As a fallback, if hostname is incorrect, you can use
 
-nixos-rebuild switch --flake .#nixosvmr
+nixos-rebuild boot --flake .#system-preferred-hostname
 
+
+# REBOOT!
 ```
 
 Reboot the vm. To speed the process, you can set the config for the machine to just `blank` reducing the number of things pulled from the nix cache. 
@@ -37,6 +48,10 @@ You need to add the following to the container conf in `/etc/pve/lxc/ct-id.conf`
 lxc.cgroup2.devices.allow: c 10:200 rwm
 lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file
 ```
+
+Run `tailscale up` to add to the system.
+
+### Deploy
 
 Edit `deploy.nix` to contain the new machine name & ip. Test deploy with `deploy .#machine-hostname` from this directory.
 

@@ -6,6 +6,7 @@ let
   pkg = inputs.rss-server.packages.x86_64-linux.default;
 in
 {
+  networking.hostName = "rss-server";
   sops.defaultSopsFile = defaultSopsFile;
   sops.age.keyFile = "/var/lib/sops-nix/keys.txt";
   sops.secrets = {
@@ -35,8 +36,6 @@ in
 
   environment.etc."rss-feed-config.edn".source = cleartextConfig;
   environment.etc."rss-feed-secrets.edn".source = config.sops.templates.rss_server.path;
-
-  networking.hostName = "rss-server";
 
   environment.systemPackages = [ pkg ]; 
 

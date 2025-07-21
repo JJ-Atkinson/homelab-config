@@ -9,6 +9,7 @@
     enable = true;
     openDefaultPorts = true;
     user = "jarrett";
+    guiAddress = "0.0.0.0:8384"; # bind all interfaces instead of just loopback
 
     dataDir = "/home/jarrett/syncthing-datadir";
 
