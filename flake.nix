@@ -66,6 +66,12 @@
             ++ [ ./systems/immich.nix ];
         };
 
+        octo-everywhere = nixpkgs.lib.nixosSystem {
+          inherit system specialArgs;
+          modules = baseModules ++ jarrettModules ++ vmHostModules
+            ++ [ ./systems/octo-everywhere.nix ];
+        };
+
         syncthing-host = nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
           modules = baseModules ++ jarrettModules ++ vmHostModules
