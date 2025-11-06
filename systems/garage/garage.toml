@@ -1,20 +1,22 @@
 metadata_dir = "/var/lib/garage/meta"
 data_dir = "/var/lib/garage/data"
+metadata_snapshots_dir = "/var/lib/garage/snapshots"
+metadata_auto_snapshot_interval = "1 day"
 metadata_fsync = false
 data_fsync = false
 
 db_engine = "lmdb"
 
-block_size = 1048576
+block_size = "2M"
 
-sled_cache_capacity = "128MiB"
-sled_flush_every_ms = 2000
-lmdb_map_size = "1T"
-
-replication_mode = "none"
+# Allow ourselves to run a single node deployment
+# cuz none of this data should be mission critical
+replication_factor = 1
+consistency_mode = "consistent"
 
 compression_level = 1
 
+# These is a secret file provided by the env
 #rpc_secret = "4425f5c26c5e11581d3223904324dcb5b5d5dfb14e5e7f35e38c595424f5f1e6"
 rpc_bind_addr = "[::]:3901"
 rpc_public_addr = "127.0.0.1:3901"
@@ -28,9 +30,12 @@ root_domain = ".s3.garage-ct.lan"
 [s3_web]
 bind_addr = "[::]:3902"
 root_domain = ".s3.pathul-dapneb.com"
+add_host_to_metrics = true
 
-#[admin]
-admin.api_bind_addr = "0.0.0.0:3903"
+[admin]
+api_bind_addr = "0.0.0.0:3903"
+trace_sink = "http://localhost:4317"
+metrics_require_token = true
+# These are both secret files provided by the env
 #metrics_token = "cacce0b2de4bc2d9f5b5fdff551e01ac1496055aed248202d415398987e35f81"
 #admin_token = "ae8cb40ea7368bbdbb6430af11cca7da833d3458a5f52086f4e805a570fb5c2a"
-admin.trace_sink = "http://localhost:4317"

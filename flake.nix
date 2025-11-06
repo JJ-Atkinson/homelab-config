@@ -40,8 +40,11 @@
         "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
         ./hardware/proxmox-lxc.nix
         ./hardware/common.nix
-        ./modules/tailscale.nix
         ./modules/etc.nix
+      ];
+
+      tailscaleModules = [
+                ./modules/tailscale.nix
       ];
 
       jarrettModules = [ ./users/common.nix ./users/jarrett.nix ];
@@ -50,31 +53,25 @@
       nixosConfigurations = {
         garage-ct = nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
-          modules = baseModules ++ jarrettModules ++ vmHostModules
+          modules = baseModules ++ jarrettModules ++ vmHostModules ++ tailscaleModules
             ++ [ ./systems/garage.nix ];
         };
 
         rss-server = nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
-          modules = baseModules ++ jarrettModules ++ vmHostModules
+          modules = baseModules ++ jarrettModules ++ vmHostModules ++ tailscaleModules
             ++ [ ./systems/rss-server.nix ];
         };
 
         immich = nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
-          modules = baseModules ++ jarrettModules ++ vmHostModules
+          modules = baseModules ++ jarrettModules ++ vmHostModules ++ tailscaleModules
             ++ [ ./systems/immich.nix ];
-        };
-
-        octo-everywhere = nixpkgs.lib.nixosSystem {
-          inherit system specialArgs;
-          modules = baseModules ++ jarrettModules ++ vmHostModules
-            ++ [ ./systems/octo-everywhere.nix ];
         };
 
         syncthing-host = nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
-          modules = baseModules ++ jarrettModules ++ vmHostModules
+          modules = baseModules ++ jarrettModules ++ vmHostModules ++ tailscaleModules
             ++ [ ./systems/syncthing-host.nix ];
         };
       };

@@ -2,9 +2,28 @@
 
 let
   logLevel = "info";
+  pkg = pkgs-unstable.garage_2;
   cleartextConfig = ./garage/garage.toml;
-  pkg = pkgs.garage_0_9;
   defaultSopsFile = ../secrets/garage.yaml;
+
+  rpcSecretFile = config.sops.secrets.rpc_secret.path;
+  adminTokenFile = config.sops.secrets.admin_token.path;
+  metricsTokenFile = config.sops.secrets.metrics_token.path;
+
+  garageOverlay = pkgs.writeShellApplication {
+    name = "garage";
+    runtimeInputs = [ pkg ];
+    text = ''
+      set -euo pipefail
+      export RUST_LOG="garage=${logLevel}"
+      export GARAGE_RPC_SECRET_FILE="${rpcSecretFile}"
+      export GARAGE_ADMIN_TOKEN_FILE="${adminTokenFile}"
+      export GARAGE_METRICS_TOKEN_FILE="${metricsTokenFile}"
+      export GARAGE_CONFIG_FILE="/etc/garage.toml"
+      exec garage "$@"
+    '';
+  };
+
 in {
   sops.defaultSopsFile = defaultSopsFile;
   sops.age.keyFile = "/var/lib/sops-nix/keys.txt";
@@ -13,15 +32,6 @@ in {
     admin_token = { };
     metrics_token = { };
   };
-  sops.templates.garage_toml.content = ''
-    # Begin Secrets
-    rpc_secret = "${config.sops.placeholder.rpc_secret}"
-    admin.admin_token = "${config.sops.placeholder.admin_token}"
-    admin.metrics_token = "${config.sops.placeholder.metrics_token}"
-    # End Secrets
-
-    ${builtins.readFile cleartextConfig}
-  '';
 
   networking.firewall.allowedTCPPorts =
     [ # Must be updated when the toml file is updated
@@ -34,11 +44,9 @@ in {
 
   networking.hostName = "garage-ct";
 
-  environment.etc."garage.toml" = {
-    source = lib.mkForce config.sops.templates.garage_toml.path;
-  };
+  environment.etc."garage.toml".source = cleartextConfig;
 
-  environment.systemPackages = [ pkg ];
+  environment.systemPackages = [ garageOverlay ];
 
   systemd.services.garage = {
     description = "Garage Object Storage (S3 compatible)";
@@ -57,6 +65,11 @@ in {
       # ProtectHome = true;
       # NoNewPrivileges = true;
     };
-    environment = { RUST_LOG = "garage=${logLevel}"; };
+    environment = {
+      RUST_LOG = "garage=${logLevel}";
+      GARAGE_RPC_SECRET_FILE = config.sops.secrets.rpc_secret.path;
+      GARAGE_ADMIN_TOKEN_FILE = config.sops.secrets.admin_token.path;
+      GARAGE_METRICS_TOKEN_FILE = config.sops.secrets.metrics_token.path;
+    };
   };
 }

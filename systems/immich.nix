@@ -5,6 +5,7 @@
   networking.hostName = "immich";
   services.immich = {
     enable = true;
+    package = pkgs-unstable.immich;
     # environment.IMMICH_MACHINE_LEARNING_URL = "http://localhost:3003";
 
     # managed in this file, checkout
