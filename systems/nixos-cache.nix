@@ -2,7 +2,7 @@
 
 {
   imports = [
-    inputs.nixos-passthru-cache.nixosModules.default
+    inputs.nixos-passthru-cache.nixosModules.nixos-passthru-cache
   ];
 
   networking.hostName = "nixos-cache";
