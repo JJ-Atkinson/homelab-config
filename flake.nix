@@ -8,10 +8,11 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     deploy.url = "github:serokell/deploy-rs";
     rss-server.url = "github:JJ-Atkinson/personal-rss-reserver";
+    nixos-passthru-cache.url = "github:numtide/nixos-passthru-cache";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, flake-utils
-    , sops-nix, deploy, rss-server }@inputs:
+    , sops-nix, deploy, rss-server, nixos-passthru-cache }@inputs:
 
     let
       system = "x86_64-linux";
@@ -73,6 +74,12 @@
           inherit system specialArgs;
           modules = baseModules ++ jarrettModules ++ vmHostModules ++ tailscaleModules
             ++ [ ./systems/syncthing-host.nix ];
+        };
+
+        nixos-cache = nixpkgs.lib.nixosSystem {
+          inherit system specialArgs;
+          modules = baseModules ++ jarrettModules ++ vmHostModules
+            ++ [ ./systems/nixos-cache.nix ];
         };
       };
 

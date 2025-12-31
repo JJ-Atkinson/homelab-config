@@ -19,5 +19,6 @@ in
     rss-server = mkNode "rss-server" "192.168.50.193" true;
     immich = mkNode "immich" "192.168.50.37" true;
     syncthing-host = mkNode "syncthing-host" "syncthing-host" true;
+    nixos-cache = mkNode "nixos-cache" "nixos-cache" true;
   };
 }
